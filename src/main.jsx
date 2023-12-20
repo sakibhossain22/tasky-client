@@ -8,6 +8,7 @@ import {
 import MainLayout from './components/MainLayout/MainLayout';
 import ErrorPage from './components/ErrorPage/ErrorPage';
 import Home from './components/Home/Home';
+import Dashboard from './components/Dashboard/Dashboard';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path : '/',
         element : <Home/>
+      },
+      {
+        path : '/dashboard',
+        element : <Dashboard></Dashboard>
       }
     ]
   },
