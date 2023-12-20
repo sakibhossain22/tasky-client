@@ -23,12 +23,12 @@ const UserTypesSection = () => {
         <div className="mx-5 my-10">
             <h1 className="text-center text-3xl mb-2 font-bold">Popular <span className="text-[#f1c40f]">Users</span></h1>
             <div className="h-1 w-28 mb-10 bg-[#f1c40f] mx-auto"></div>
-            <div className="flex gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5">
                 {userTypes.map((userType, index) => (
-                    <div key={index} className="card card-compact w-96 bg-base-100 shadow-xl">
+                    <div key={index} className="card card-compact  bg-base-100 shadow-xl">
                         <figure><img className="h-48 w-full" src={userType.image} alt="Shoes" /></figure>
                         <div className="card-body">
-                            <h2 className="card-title">{userType.title}</h2>
+                            <h2 className="card-title text-2xl">{userType.title}</h2>
                             <p>{userType.description}</p>
                         </div>
                     </div>

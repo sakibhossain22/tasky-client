@@ -49,35 +49,9 @@ const Dashboard = () => {
     }),
   });
 
-  const userTypes = [
-    {
-      title: 'Developers',
-      description: 'Manage and organize tasks in a collaborative environment. Track deadlines and priorities.',
-    },
-    {
-      title: 'Corporate Professionals',
-      description: 'Efficiently handle project tasks, deadlines, and priorities. Stay organized in the workplace.',
-    },
-    {
-      title: 'Bankers',
-      description: 'Keep track of important tasks and deadlines. Prioritize and manage work effectively.',
-    },
-    // Add more user types as needed
-  ];
-
   return (
     <div>
       <h1>Task Management Dashboard</h1>
-      
-      <h2>Who Can Benefit?</h2>
-      <ul>
-        {userTypes.map((userType, index) => (
-          <li key={index}>
-            <strong>{userType.title}</strong>: {userType.description}
-          </li>
-        ))}
-      </ul>
-
       <form onSubmit={handleSubmit((data) => handleCreateTask({ id: Date.now(), ...data }))}>
         <label>
           Title:
