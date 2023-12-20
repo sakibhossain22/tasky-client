@@ -5,7 +5,7 @@ const Banner = () => {
         <div className='bg-white mx-5'>
             <div className='flex  gap-10 items-center justify-between'>
                 <div className='w-1/2 flex flex-col gap-5'>
-                    <p className='text-4xl'>No.1</p>
+                    <p className='text-3xl'>World's No.1</p>
                     <h1 className='text-5xl font-bold '>Best <span className='text-[#f1c40f]'>Task</span> Management System</h1>
                     <p>Tasky is a robust and user-friendly task management system that helps individuals and teams stay organized and productive</p>
                     <Link>
