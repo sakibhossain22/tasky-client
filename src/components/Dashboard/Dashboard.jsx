@@ -2,7 +2,7 @@
 import { useContext } from 'react';
 
 import { NavLink, Outlet } from 'react-router-dom';
-import { FaArrowUp, FaShoppingCart, FaUser, FaUserFriends } from 'react-icons/fa';
+import { FaArrowUp, FaShoppingCart  } from 'react-icons/fa';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 
 const Dashboard = () => {
@@ -12,7 +12,7 @@ const Dashboard = () => {
 
   return (
     <div className='grid grid-cols-12 gap-5'>
-      <div className="col-span-3 h-screen bg-[#e65c6a]">
+      <div className="col-span-3 h-screen bg-[#be9a0b]">
         <div className="mx-10 text-white">
           <div className="w-full flex gap-4 items-center  text-center font-bold my-5">
             <img className='rounded-full w-10' src={user?.photoURL} alt="" />
