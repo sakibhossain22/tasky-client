@@ -10,7 +10,7 @@ const Download = () => (
                         <h1 className='text-lg text-black uppercase font-bold'>Mobile Application</h1>
                     </div>
                     <div className='space-y-5'>
-                        <h1 className='lg:text-6xl text-3xl text-black md:text-4xl font-bold'>Download  Our <br />Application</h1>
+                        <h1 className='lg:text-5xl text-3xl text-black md:text-4xl font-bold'>Download  Our <br />Application</h1>
                         <p className="text-gray-700">Quaerat debitis, vel, sapiente dicta sequi
                             labore porro pariatur harum expedita.
                         </p>

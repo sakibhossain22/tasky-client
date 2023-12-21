@@ -8,7 +8,7 @@ const Banner = () => {
                     <p className='text-3xl'>World's No.1</p>
                     <h1 className='lg:text-5xl text-3xl font-bold '>Best <span className='text-[#f1c40f]'>Task</span> Management System</h1>
                     <p>Tasky is a robust and user-friendly task management system that helps individuals and teams stay organized and productive</p>
-                    <Link>
+                    <Link to='/login'>
                         <button className='bg-[#f1c40f] px-6 py-3 rounded font-bold'>Let's Explore</button>
                     </Link>
                 </div>
