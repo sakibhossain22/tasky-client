@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import useAxiosSecure from '../../AxiosSecure/useAxiosSecure';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
@@ -6,9 +6,9 @@ import Swal from 'sweetalert2';
 import useTasks from '../../useTasks/useTasks';
 
 function AddTask() {
-    const { data, refetch, isLoading, isError } = useTasks()
+    const { data, isLoading } = useTasks()
     
-    const count = data?.length + 1
+    const count = data?.result?.length + 1
     console.log(count);
     const { user } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
