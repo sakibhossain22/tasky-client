@@ -35,7 +35,7 @@ const AllTask = () => {
     };
 
     postData();
-  }, [ongoingTodos,axiosSecure]);
+  }, [ongoingTodos, axiosSecure]);
   // complete Update
   useEffect(() => {
     const postData = async () => {
@@ -59,14 +59,13 @@ const AllTask = () => {
     };
 
     postData();
-  }, [completedTodos,axiosSecure]);
+  }, [completedTodos, axiosSecure]);
   // todo upate
   useEffect(() => {
     const postData = async () => {
       console.log(todos);
       const item = todos[todos.length - 1];
 
-      // Make sure there is at least one item in the ongoingTodos array
       if (item) {
         try {
           const response = await axiosSecure.patch(`/update-status/${item._id}`, { status: item.status });
@@ -83,10 +82,7 @@ const AllTask = () => {
     };
 
     postData();
-  }, [todos,axiosSecure]);
-
-
-
+  }, [todos, axiosSecure]);
 
 
   useEffect(() => {
@@ -112,36 +108,58 @@ const AllTask = () => {
 
     if (draggedTodo) {
       if (target === 'complete') {
-        // Move from Todo to Complete
         setCompletedTodos((prev) => [...prev, { ...draggedTodo, status: 'Completed' }]);
       } else if (target === 'ongoing') {
-        // Move from Todo to Ongoing
         setOngoingTodos((prev) => [...prev, { ...draggedTodo, status: 'Ongoing' }]);
       }
 
       setTodos((prev) => prev.filter((item) => item.id !== draggedTodo.id));
     } else if (completedDraggedTodo) {
       if (target === 'todo') {
-        // Move from Complete to Todo
         setTodos((prev) => [...prev, { ...completedDraggedTodo, status: 'Todo' }]);
       } else if (target === 'ongoing') {
-        // Move from Complete to Ongoing
         setOngoingTodos((prev) => [...prev, { ...completedDraggedTodo, status: 'ongoing' }]);
       }
 
       setCompletedTodos((prev) => prev.filter((item) => item.id !== completedDraggedTodo.id));
     } else if (ongoingDraggedTodo) {
       if (target === 'todo') {
-        // Move from Ongoing to Todo
         setTodos((prev) => [...prev, { ...ongoingDraggedTodo, status: 'Todo' }]);
       } else if (target === 'complete') {
-        // Move from Ongoing to Complete
         setCompletedTodos((prev) => [...prev, { ...ongoingDraggedTodo, status: 'Completed' }]);
       }
 
       setOngoingTodos((prev) => prev.filter((item) => item.id !== ongoingDraggedTodo.id));
     }
   };
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/task/${id}`)
+          .then(res => {
+            if (res?.data?.deletedCount > 0) {
+              refetch()
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+              });
+            }
+          })
+
+      }
+    });
+    console.log(id);
+
+  }
   if (loading) return <div className='flex items-center justify-center h-screen'><span className="loading loading-spinner loading-lg"></span></div>
   return (
     <div className='mr-3 mt-2'>
@@ -153,9 +171,10 @@ const AllTask = () => {
           onDrop={(e) => handleDrop(e, 'todo')}
         >
           <div className='grid grid-cols-12 text-white font-bold bg-yellow-500 py-2 rounded mb-2 items-center justify-between px-4'>
-            <span className='col-span-5'>Title</span>
-            <span className='col-span-5'>Priority</span>
+            <span className='col-span-4'>Title</span>
+            <span className='col-span-4'>Priority</span>
             <span className='col-span-2'>Deadline</span>
+            <span className='col-span-2 pl-10'>Delete</span>
           </div>
           {todos?.map((todo) => (
             <div
@@ -165,9 +184,10 @@ const AllTask = () => {
               className="cursor-pointer bg-yellow-200 p-2 mb-2"
             >
               <div className='grid grid-cols-12  items-center justify-between px-4'>
-                <span className='col-span-5'>{todo.title}</span>
-                <span className='col-span-5 '>{todo.priority}</span>
+                <span className='col-span-4'>{todo.title}</span>
+                <span className='col-span-4 '>{todo.priority}</span>
                 <span className='col-span-2 '>{todo.deadline}</span>
+                <button onClick={() => handleDelete(todo?._id)} className='text-white col-span-2 bg-red-400 rounded w-1/2 mx-auto'>Delete</button>
               </div>
             </div>
           ))}
@@ -180,10 +200,11 @@ const AllTask = () => {
           onDragOver={(e) => handleDragOver(e)}
           onDrop={(e) => handleDrop(e, 'ongoing')}
         >
-          <div className='grid grid-cols-12 text-white font-bold bg-blue-500 py-2 rounded mb-2 items-center justify-between px-4'>
-            <span className='col-span-5'>Title</span>
-            <span className='col-span-5'>Priority</span>
+          <div className='grid grid-cols-12 text-white font-bold bg-yellow-500 py-2 rounded mb-2 items-center justify-between px-4'>
+            <span className='col-span-4'>Title</span>
+            <span className='col-span-4'>Priority</span>
             <span className='col-span-2'>Deadline</span>
+            <span className='col-span-2 pl-10'>Delete</span>
           </div>
           {ongoingTodos?.map((todo) => (
             <div
@@ -193,9 +214,10 @@ const AllTask = () => {
               className="cursor-pointer bg-blue-200 p-2 mb-2"
             >
               <div className='grid grid-cols-12  items-center justify-between px-4'>
-                <span className='col-span-5'>{todo.title}</span>
-                <span className='col-span-5 '>{todo.priority}</span>
+                <span className='col-span-4'>{todo.title}</span>
+                <span className='col-span-4 '>{todo.priority}</span>
                 <span className='col-span-2 '>{todo.deadline}</span>
+                <button onClick={() => handleDelete(todo?._id)} className='text-white col-span-2 bg-red-400 rounded w-1/2 mx-auto'>Delete</button>
               </div>
             </div>
           ))}
@@ -208,10 +230,11 @@ const AllTask = () => {
           onDragOver={(e) => handleDragOver(e)}
           onDrop={(e) => handleDrop(e, 'complete')}
         >
-          <div className='grid grid-cols-12 text-white font-bold bg-green-500 py-2 rounded mb-2 items-center justify-between px-4'>
-            <span className='col-span-5'>Title</span>
-            <span className='col-span-5'>Priority</span>
+          <div className='grid grid-cols-12 text-white font-bold bg-yellow-500 py-2 rounded mb-2 items-center justify-between px-4'>
+            <span className='col-span-4'>Title</span>
+            <span className='col-span-4'>Priority</span>
             <span className='col-span-2'>Deadline</span>
+            <span className='col-span-2 pl-10'>Delete</span>
           </div>
           {completedTodos?.map((todo) => (
             <div
@@ -221,9 +244,10 @@ const AllTask = () => {
               className="cursor-pointer bg-green-200 p-2 mb-2"
             >
               <div className='grid grid-cols-12  items-center justify-between px-4'>
-                <span className='col-span-5'>{todo.title}</span>
-                <span className='col-span-5 '>{todo.priority}</span>
+                <span className='col-span-4'>{todo.title}</span>
+                <span className='col-span-4 '>{todo.priority}</span>
                 <span className='col-span-2 '>{todo.deadline}</span>
+                <button onClick={() => handleDelete(todo?._id)} className='text-white col-span-2 bg-red-400 rounded w-1/2 mx-auto'>Delete</button>
               </div>
 
             </div>

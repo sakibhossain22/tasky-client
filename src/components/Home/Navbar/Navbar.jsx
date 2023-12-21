@@ -9,7 +9,7 @@ const Navbar = () => {
         <NavLink to='/'>Home</NavLink>
 
         {
-            user ? <NavLink to='/dashboard'>Dashboard</NavLink>
+            user ? <NavLink to='/dashboard/home'>Dashboard</NavLink>
                 :
                 <>
                     <NavLink to='/register'>Register</NavLink>
