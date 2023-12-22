@@ -43,7 +43,7 @@ function AddTask() {
     };
     if (isLoading) return <div className='flex items-center justify-center h-screen'><span className="loading loading-spinner loading-lg"></span></div>
     return (
-        <div className="w- mx-auto mt-8 p-4 bg-white rounded shadow-md">
+        <div className="mx-auto lg:mt-8 p-4 bg-white rounded shadow-md">
             <h2 className="text-2xl font-bold mb-4 text-center">Create a New Task</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>

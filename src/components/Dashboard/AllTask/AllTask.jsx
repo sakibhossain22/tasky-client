@@ -3,6 +3,7 @@ import useTasks from '../../useTasks/useTasks';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../AxiosSecure/useAxiosSecure';
+import { MdDeleteSweep } from "react-icons/md";
 
 const AllTask = () => {
   const { data, refetch, isLoading, isError } = useTasks()
@@ -16,17 +17,17 @@ const AllTask = () => {
   useEffect(() => {
     const postData = async () => {
       console.log(ongoingTodos);
-      const item = ongoingTodos[ongoingTodos.length - 1];
+      const item = ongoingTodos[ongoingTodos?.length - 1];
 
       // Make sure there is at least one item in the ongoingTodos array
       if (item) {
         try {
-          const response = await axiosSecure.patch(`/update-status/${item._id}`, { status: item.status });
+          const response = await axiosSecure.patch(`/update-status/${item?._id}`, { status: item?.status });
 
-          if (response.data.modifiedCount > 0) {
-            console.log(response.data);
+          if (response?.data?.modifiedCount > 0) {
+            console.log(response?.data);
           } else {
-            console.error('Failed to update status:', response.data.error);
+            console.error('Failed to update status:', response?.data.error);
           }
         } catch (error) {
           console.error('Error updating status:', error);
@@ -40,17 +41,17 @@ const AllTask = () => {
   useEffect(() => {
     const postData = async () => {
       console.log(completedTodos);
-      const item = completedTodos[completedTodos.length - 1];
+      const item = completedTodos[completedTodos?.length - 1];
 
       // Make sure there is at least one item in the ongoingTodos array
       if (item) {
         try {
-          const response = await axiosSecure.patch(`/update-status/${item._id}`, { status: item.status });
+          const response = await axiosSecure.patch(`/update-status/${item?._id}`, { status: item?.status });
 
           if (response.data.modifiedCount > 0) {
-            console.log(response.data);
+            console.log(response?.data);
           } else {
-            console.error('Failed to update status:', response.data.error);
+            console.error('Failed to update status:', response?.data.error);
           }
         } catch (error) {
           console.error('Error updating status:', error);
@@ -64,16 +65,16 @@ const AllTask = () => {
   useEffect(() => {
     const postData = async () => {
       console.log(todos);
-      const item = todos[todos.length - 1];
+      const item = todos[todos?.length - 1];
 
       if (item) {
         try {
-          const response = await axiosSecure.patch(`/update-status/${item._id}`, { status: item.status });
+          const response = await axiosSecure.patch(`/update-status/${item?._id}`, { status: item?.status });
 
-          if (response.data.modifiedCount > 0) {
-            console.log(response.data);
+          if (response?.data?.modifiedCount > 0) {
+            console.log(response?.data);
           } else {
-            console.error('Failed to update status:', response.data.error);
+            console.error('Failed to update status:', response?.data.error);
           }
         } catch (error) {
           console.error('Error updating status:', error);
@@ -162,19 +163,19 @@ const AllTask = () => {
   }
   if (loading) return <div className='flex items-center justify-center h-screen'><span className="loading loading-spinner loading-lg"></span></div>
   return (
-    <div className='mr-3 mt-2'>
-      <div className="">
+    <div className='lg:mr-3 mt-2'>
+      <div>
         <h2 className="text-xl border-l-4 border-red-500 pl-2 uppercase  font-bold mb-2">Todo List</h2>
         <div
           className="py-4 pb-5 h-full"
           onDragOver={(e) => handleDragOver(e)}
           onDrop={(e) => handleDrop(e, 'todo')}
         >
-          <div className='grid grid-cols-12 text-white font-bold bg-yellow-500 py-2 rounded mb-2 items-center justify-between px-4'>
-            <span className='col-span-4'>Title</span>
-            <span className='col-span-4'>Priority</span>
-            <span className='col-span-2'>Deadline</span>
-            <span className='col-span-2 pl-10'>Delete</span>
+          <div className='grid grid-cols-12 lg:text-base md:text-base text-xs text-white font-bold bg-yellow-500 py-2 rounded mb-2 items-center justify-between px-4'>
+            <span className='col-span-3 md:col-span-4 lg:col-span-4'>Title</span>
+            <span className='col-span-3 md:col-span-4 lg:col-span-4'>Priority</span>
+            <span className='col-span-3 md:col-span-2 lg:col-span-2'>Deadline</span>
+            <span className='col-span-3 md:col-span-2 lg:col-span-2 pl-10'>Delete</span>
           </div>
           {todos?.map((todo) => (
             <div
@@ -183,11 +184,15 @@ const AllTask = () => {
               onDragStart={(e) => handleDragStart(e, todo?.id)}
               className="cursor-pointer bg-yellow-200 p-2 mb-2"
             >
-              <div className='grid grid-cols-12  items-center justify-between px-4'>
-                <span className='col-span-4'>{todo.title}</span>
-                <span className='col-span-4 '>{todo.priority}</span>
-                <span className='col-span-2 '>{todo.deadline}</span>
-                <button onClick={() => handleDelete(todo?._id)} className='text-white col-span-2 bg-red-400 rounded w-1/2 mx-auto'>Delete</button>
+              <div className='grid grid-cols-12  items-center justify-between lg:px-4'>
+                <span className='lg:col-span-4 md:col-span-4 col-span-3 lg:text-base text-xs'>{todo.title}</span>
+                <span className='lg:col-span-4 md:col-span-4 col-span-3 lg:text-base text-xs '>{todo.priority}</span>
+                <span className='lg:col-span-2 md:col-span-2 col-span-3 lg:text-base text-xs '>{todo.deadline}</span>
+                <div className='flex lg:col-span-2 md:col-span-2 col-span-3 items-center justify-center ml-8 bg-red-200 py-2'>
+                  <button onClick={() => handleDelete(todo?._id)}>
+                   <MdDeleteSweep className='text-center mx-auto text-xl'></MdDeleteSweep>
+                    </button>
+                </div>
               </div>
             </div>
           ))}
@@ -200,24 +205,28 @@ const AllTask = () => {
           onDragOver={(e) => handleDragOver(e)}
           onDrop={(e) => handleDrop(e, 'ongoing')}
         >
-          <div className='grid grid-cols-12 text-white font-bold bg-yellow-500 py-2 rounded mb-2 items-center justify-between px-4'>
-            <span className='col-span-4'>Title</span>
-            <span className='col-span-4'>Priority</span>
-            <span className='col-span-2'>Deadline</span>
-            <span className='col-span-2 pl-10'>Delete</span>
+          <div className='grid grid-cols-12 lg:text-base md:text-base text-xs text-white font-bold bg-purple-500 py-2 rounded mb-2 items-center justify-between px-4'>
+            <span className='col-span-3 md:col-span-4 lg:col-span-4'>Title</span>
+            <span className='col-span-3 md:col-span-4 lg:col-span-4'>Priority</span>
+            <span className='col-span-3 md:col-span-2 lg:col-span-2'>Deadline</span>
+            <span className='col-span-3 md:col-span-2 lg:col-span-2 pl-10'>Delete</span>
           </div>
           {ongoingTodos?.map((todo) => (
             <div
               key={todo.id}
               draggable
               onDragStart={(e) => handleDragStart(e, todo.id)}
-              className="cursor-pointer bg-blue-200 p-2 mb-2"
+              className="cursor-pointer bg-purple-200 p-2 mb-2"
             >
-              <div className='grid grid-cols-12  items-center justify-between px-4'>
-                <span className='col-span-4'>{todo.title}</span>
-                <span className='col-span-4 '>{todo.priority}</span>
-                <span className='col-span-2 '>{todo.deadline}</span>
-                <button onClick={() => handleDelete(todo?._id)} className='text-white col-span-2 bg-red-400 rounded w-1/2 mx-auto'>Delete</button>
+              <div className='grid grid-cols-12  items-center justify-between lg:px-4'>
+                <span className='lg:col-span-4 md:col-span-4 col-span-3 lg:text-base text-xs'>{todo.title}</span>
+                <span className='lg:col-span-4 md:col-span-4 col-span-3 lg:text-base text-xs '>{todo.priority}</span>
+                <span className='lg:col-span-2 md:col-span-2 col-span-3 lg:text-base text-xs '>{todo.deadline}</span>
+                <div className='flex lg:col-span-2 md:col-span-2 col-span-3 items-center justify-center ml-8 bg-red-200 py-2'>
+                  <button onClick={() => handleDelete(todo?._id)}>
+                   <MdDeleteSweep className='text-center mx-auto text-xl'></MdDeleteSweep>
+                    </button>
+                </div>
               </div>
             </div>
           ))}
@@ -230,11 +239,11 @@ const AllTask = () => {
           onDragOver={(e) => handleDragOver(e)}
           onDrop={(e) => handleDrop(e, 'complete')}
         >
-          <div className='grid grid-cols-12 text-white font-bold bg-yellow-500 py-2 rounded mb-2 items-center justify-between px-4'>
-            <span className='col-span-4'>Title</span>
-            <span className='col-span-4'>Priority</span>
-            <span className='col-span-2'>Deadline</span>
-            <span className='col-span-2 pl-10'>Delete</span>
+          <div className='grid grid-cols-12 lg:text-base md:text-base text-xs text-white font-bold bg-green-500 py-2 rounded mb-2 items-center justify-between px-4'>
+            <span className='col-span-3 md:col-span-4 lg:col-span-4'>Title</span>
+            <span className='col-span-3 md:col-span-4 lg:col-span-4'>Priority</span>
+            <span className='col-span-3 md:col-span-2 lg:col-span-2'>Deadline</span>
+            <span className='col-span-3 md:col-span-2 lg:col-span-2 pl-10'>Delete</span>
           </div>
           {completedTodos?.map((todo) => (
             <div
@@ -243,11 +252,15 @@ const AllTask = () => {
               onDragStart={(e) => handleDragStart(e, todo.id)}
               className="cursor-pointer bg-green-200 p-2 mb-2"
             >
-              <div className='grid grid-cols-12  items-center justify-between px-4'>
-                <span className='col-span-4'>{todo.title}</span>
-                <span className='col-span-4 '>{todo.priority}</span>
-                <span className='col-span-2 '>{todo.deadline}</span>
-                <button onClick={() => handleDelete(todo?._id)} className='text-white col-span-2 bg-red-400 rounded w-1/2 mx-auto'>Delete</button>
+             <div className='grid grid-cols-12  items-center justify-between lg:px-4'>
+                <span className='lg:col-span-4 md:col-span-4 col-span-3 lg:text-base text-xs'>{todo.title}</span>
+                <span className='lg:col-span-4 md:col-span-4 col-span-3 lg:text-base text-xs '>{todo.priority}</span>
+                <span className='lg:col-span-2 md:col-span-2 col-span-3 lg:text-base text-xs '>{todo.deadline}</span>
+                <div className='flex lg:col-span-2 md:col-span-2 col-span-3 items-center justify-center ml-8 bg-red-200 py-2'>
+                  <button onClick={() => handleDelete(todo?._id)}>
+                   <MdDeleteSweep className='text-center mx-auto text-xl'></MdDeleteSweep>
+                    </button>
+                </div>
               </div>
 
             </div>
