@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
-import { useContext } from "react";
-import { AuthContext } from "../AuthProvider/AuthProvider";
 import { Navigate, useLocation } from "react-router-dom";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+import { useContext } from "react";
+
 
 
 const PrivateRoute = ({ children }) => {
@@ -16,7 +16,7 @@ const PrivateRoute = ({ children }) => {
     if (user) {
         return children
     }
-    return <Navigate state={location.pathname} to='/login'></Navigate>
+    return <Navigatestate={location.pathname} to='/login'></Navigate>
 };
 
 export default PrivateRoute;

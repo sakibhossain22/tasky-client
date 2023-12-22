@@ -4,11 +4,12 @@ import { AuthContext } from '../../AuthProvider/AuthProvider';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../AxiosSecure/useAxiosSecure';
 import { MdDeleteSweep } from "react-icons/md";
-
+import { useToasts } from 'react-toast-notifications';
 const AllTask = () => {
-  const { data, refetch, isLoading, isError } = useTasks()
-
-  const { user, loading } = useContext(AuthContext)
+  const { addToast } = useToasts();
+  const { data, refetch} = useTasks()
+  console.log(data);
+  const { loading } = useContext(AuthContext)
   const [todos, setTodos] = useState();
   const [completedTodos, setCompletedTodos] = useState([]);
   const [ongoingTodos, setOngoingTodos] = useState([]);
@@ -25,7 +26,11 @@ const AllTask = () => {
           const response = await axiosSecure.patch(`/update-status/${item?._id}`, { status: item?.status });
 
           if (response?.data?.modifiedCount > 0) {
-            console.log(response?.data);
+            const toast = addToast('Task Updated !', {
+              appearance: 'info',
+              autoDismiss: true, 
+              autoDismissTimeout: 2000,
+            });
           } else {
             console.error('Failed to update status:', response?.data.error);
           }
@@ -36,7 +41,7 @@ const AllTask = () => {
     };
 
     postData();
-  }, [ongoingTodos, axiosSecure]);
+  }, [ongoingTodos,addToast, axiosSecure]);
   // complete Update
   useEffect(() => {
     const postData = async () => {
@@ -48,7 +53,11 @@ const AllTask = () => {
           const response = await axiosSecure.patch(`/update-status/${item?._id}`, { status: item?.status });
 
           if (response.data.modifiedCount > 0) {
-            console.log(response?.data);
+            const toast = addToast('Task Updated !', {
+              appearance: 'info',
+              autoDismiss: true, 
+              autoDismissTimeout: 2000,
+            });
           } else {
             console.error('Failed to update status:', response?.data.error);
           }
@@ -59,7 +68,7 @@ const AllTask = () => {
     };
 
     postData();
-  }, [completedTodos, axiosSecure]);
+  }, [completedTodos,addToast, axiosSecure]);
   // todo upate
   useEffect(() => {
     const postData = async () => {
@@ -70,7 +79,11 @@ const AllTask = () => {
           const response = await axiosSecure.patch(`/update-status/${item?._id}`, { status: item?.status });
 
           if (response?.data?.modifiedCount > 0) {
-            console.log(response?.data);
+            const toast = addToast('Task Updated !', {
+              appearance: 'info',
+              autoDismiss: true, 
+              autoDismissTimeout: 2000,
+            });
           } else {
             console.error('Failed to update status:', response?.data.error);
           }
@@ -81,7 +94,7 @@ const AllTask = () => {
     };
 
     postData();
-  }, [todos, axiosSecure]);
+  }, [todos,addToast, axiosSecure]);
 
 
   useEffect(() => {
@@ -117,7 +130,7 @@ const AllTask = () => {
       if (target === 'todo') {
         setTodos((prev) => [...prev, { ...completedDraggedTodo, status: 'Todo' }]);
       } else if (target === 'ongoing') {
-        setOngoingTodos((prev) => [...prev, { ...completedDraggedTodo, status: 'ongoing' }]);
+        setOngoingTodos((prev) => [...prev, { ...completedDraggedTodo, status: 'Ongoing' }]);
       }
 
       setCompletedTodos((prev) => prev.filter((item) => item.id !== completedDraggedTodo.id));

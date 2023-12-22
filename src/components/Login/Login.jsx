@@ -64,7 +64,7 @@ const Login = () => {
     return (
         <div>
             <Helmet>
-                <title>QuickBite || Login</title>
+                <title>Tasky || Login</title>
             </Helmet>
             <div className="flex flex-row-reverse w-full items-center justify-center">
                 <div className="border lg:w-2/6 rounded-lg p-8">
@@ -95,7 +95,7 @@ const Login = () => {
                                 Login
                             </button>
                         </div>
-                        <p className="text-center text-black mb-4">Dont Have An Account? <NavLink className='text-white font-bold bg-green-600 px-2 py-1 rounded' to='/register'>Register</NavLink></p>
+                        <p className="text-center text-black mb-4">Dont Have An Account? <NavLink className='font-bold px-2 py-1 rounded' to='/register'>Register</NavLink></p>
                     </form>
                     <button onClick={HandleGoogleLogin} className='flex mx-auto items-center bg-white border lg:p-2 p-1 md:p-2 rounded-lg hover:bg-green-400 transition'>
                         <img className="w-8" src="https://i.ibb.co/zbMdxWH/Google-G-Logo-svg.webp" alt="Google Logo" />

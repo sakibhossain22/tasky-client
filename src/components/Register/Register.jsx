@@ -37,11 +37,6 @@ const Register = () => {
                     .then(res => console.log('updated'))
                     .catch(error => console.log(error))
 
-                axios.post(`https://quickbite-server.vercel.app/user`, { name, email, password, photo })
-                    .then(res => {
-                        console.log(res.data);
-                    })
-
                 updateUser(name, photo)
                     .then(result => {
                         console.log('profile updated');
@@ -66,13 +61,13 @@ const Register = () => {
                     icon: 'error',
                     confirmButtonText: 'OK'
                 })
-                // console.log(message)
+               
             })
     }
     return (
         <div className="flex items-center gap-5 justify-center my-10 ">
             <Helmet>
-                <title>QuickBite || Register</title>
+                <title>Tasky || Register</title>
             </Helmet>
             <div className="rounded-lg border p-8 max-w-md w-full">
                 <h1 className="text-3xl text-[#f1c40f] font-bold text-center mb-6">Create Account</h1>

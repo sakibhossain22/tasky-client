@@ -23,6 +23,7 @@ const {loading} = useContext(AuthContext)
             const res = await axiosSecure.patch(`/update-task/${id}`, newTask);
             if (res?.data?.modifiedCount) {
                 console.log(res?.data);
+                // eslint-disable-next-line no-unused-vars
                 const toast = addToast('Task info Updated !', {
                     appearance: 'info',
                     autoDismiss: true, 

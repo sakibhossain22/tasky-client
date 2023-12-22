@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import useAxiosSecure from "../../AxiosSecure/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { MdDeleteSweep } from "react-icons/md";
-import Swal from "sweetalert2";
 import { FaPen } from "react-icons/fa";
+import { Helmet } from "react-helmet";
 
 const DashboardHome = () => {
     const [cateData, setCateData] = useState([])
@@ -33,16 +32,21 @@ const DashboardHome = () => {
 
     useEffect(() => {
         const source = axios.CancelToken.source();
+
         const fetchData = async () => {
             try {
                 const response = await axiosSecure.get(`/all-tasks?email=${user?.email}`, {
                     cancelToken: source.token,
                 });
 
-                setCateData(response?.data);
-                const totalTasks = response?.data?.todo?.length + response?.data?.ongoing?.length + response?.data?.completed?.length;
-                const completedPercentage = (response?.data?.completed?.length / totalTasks) * 100;
-                setParcent(parseInt(completedPercentage))
+                console.log('Data fetched successfully:', response.data);
+
+                setCateData(response.data);
+
+                const totalTasks = response.data?.todo.length + response.data?.ongoing.length + response.data?.completed.length;
+                const completedPercentage = (response.data?.completed.length / totalTasks) * 100;
+
+                setParcent(parseInt(completedPercentage));
             } catch (error) {
                 if (axios.isCancel(error)) {
                     console.log('Request canceled:', error.message);
@@ -57,36 +61,14 @@ const DashboardHome = () => {
         return () => {
             source.cancel('Request canceled on component unmount');
         };
-
-
     }, [axiosSecure, user?.email]);
     if (loading) return <div className='flex items-center justify-center h-screen'><span className="loading loading-spinner loading-lg"></span></div>
-    const handleUpdate = (id) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Update it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axiosSecure.update(`/task/${id}`)
-                    .then(res => {
-                        if (res?.data?.modifiedCount > 0) {
-                            refetch()
-                            alert('updated')
-                        }
-                    })
 
-            }
-        });
-        console.log(id);
-
-    }
     return (
         <div className="lg:mr-8 my-5">
+            <Helmet>
+                <title>Tasky || Dashboard</title>
+            </Helmet>
             <div>
                 <h1 className="lg:text-4xl text-2xl font-bold">Wellcome <span className="text-[#da7b00]">{user?.displayName}</span></h1>
             </div>
@@ -156,16 +138,19 @@ const DashboardHome = () => {
                                             <td className="font-bold">{stat?.title}</td>
                                             <td>{stat?.status}</td>
                                             <td>{stat?.deadline}</td>
-                                            <div className='flex mt-1 items-center'>
-                                                <Link to={`/dashboard/updatetask/${stat?._id}`}>
-                                                    <button className='lg:col-span-2 md:col-span-2 col-span-3 py-2 bg-gray-300 px-3 lg:px-6'>
-                                                        <FaPen className='text-center mx-auto'></FaPen>
-                                                    </button>
-                                                </Link>
-                                            </div>
+                                            <td> {/* Place the div here, within a td element */}
+                                                <div className='flex mt-1 items-center'>
+                                                    <Link to={`/dashboard/updatetask/${stat?._id}`}>
+                                                        <button className='lg:col-span-2 md:col-span-2 col-span-3 py-2 bg-gray-300 px-3 lg:px-6'>
+                                                            <FaPen className='text-center mx-auto'></FaPen>
+                                                        </button>
+                                                    </Link>
+                                                </div>
+                                            </td>
                                         </tr>
                                     ))
                                 }
+
                             </tbody>
                         </table>
                     </div>
