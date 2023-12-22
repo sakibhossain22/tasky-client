@@ -43,11 +43,12 @@ function AddTask() {
     };
     if (isLoading) return <div className='flex items-center justify-center h-screen'><span className="loading loading-spinner loading-lg"></span></div>
     return (
-        <div className="mx-auto lg:mt-8 p-4 bg-white rounded shadow-md">
-            <h2 className="text-2xl font-bold mb-4 text-center">Create a New Task</h2>
+        <div className="mx-auto lg:mt-8 p-2 mr-2 bg-gray-200 rounded shadow-md">
+            <h2 className="text-2xl font-bold mb-4 text-center">Create a New <span className='text-yellow-500'>Task</span></h2>
+            <div className='h-1 w-24 bg-yellow-500 mx-auto'></div>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-600">
+                    <label htmlFor="title" className="block font-medium text-gray-600">
                         Title:
                     </label>
                     <input
@@ -60,7 +61,7 @@ function AddTask() {
                     />
                 </div>
                 <div>
-                    <label htmlFor="description" className="block text-sm font-medium text-gray-600">
+                    <label htmlFor="description" className="block font-medium text-gray-600">
                         Description:
                     </label>
                     <textarea
@@ -73,7 +74,7 @@ function AddTask() {
                     />
                 </div>
                 <div>
-                    <label htmlFor="deadline" className="block text-sm font-medium text-gray-600">
+                    <label htmlFor="deadline" className="block font-medium text-gray-600">
                         Deadline:
                     </label>
                     <input
@@ -85,7 +86,7 @@ function AddTask() {
                     />
                 </div>
                 <div>
-                    <label htmlFor="priority" className="block text-sm font-medium text-gray-600">
+                    <label htmlFor="priority" className="block font-medium text-gray-600">
                         Priority:
                     </label>
                     <select
