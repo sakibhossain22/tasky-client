@@ -9,7 +9,6 @@ function AddTask() {
     const { data, isLoading } = useTasks()
     
     const count = data?.result?.length + 1
-    console.log(count);
     const { user } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
     const { register, handleSubmit } = useForm();
@@ -24,8 +23,6 @@ function AddTask() {
             status : 'Todo',
             id : count
         };
-
-        console.log(newTask);
 
         try {
             const res = await axiosSecure.post('/my-task', newTask);

@@ -40,7 +40,6 @@ const AllTask = () => {
   // complete Update
   useEffect(() => {
     const postData = async () => {
-      console.log(completedTodos);
       const item = completedTodos[completedTodos?.length - 1];
 
       // Make sure there is at least one item in the ongoingTodos array
@@ -64,7 +63,6 @@ const AllTask = () => {
   // todo upate
   useEffect(() => {
     const postData = async () => {
-      console.log(todos);
       const item = todos[todos?.length - 1];
 
       if (item) {
@@ -164,7 +162,7 @@ const AllTask = () => {
   if (loading) return <div className='flex items-center justify-center h-screen'><span className="loading loading-spinner loading-lg"></span></div>
   return (
     <div className='lg:mr-3 mt-2'>
-      <div>
+      <div className='overflow-y-auto'>
         <h2 className="text-xl border-l-4 border-red-500 pl-2 uppercase  font-bold mb-2">Todo List</h2>
         <div
           className="py-4 pb-5 h-full"
@@ -198,7 +196,7 @@ const AllTask = () => {
           ))}
         </div>
       </div>
-      <div className="">
+      <div className="overflow-y-auto">
         <h2 className="text-xl border-l-4 border-red-500 pl-2 uppercase  font-bold mb-4">Ongoing</h2>
         <div
           className="pb-10 h-full"
@@ -232,7 +230,7 @@ const AllTask = () => {
           ))}
         </div>
       </div>
-      <div className="">
+      <div className="overflow-y-auto">
         <h2 className="text-xl border-l-4 border-red-500 pl-2 uppercase  font-bold mb-4">Completed</h2>
         <div
           className="pb-10 h-full"
