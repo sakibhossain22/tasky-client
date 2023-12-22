@@ -2,7 +2,7 @@
 import { useContext } from 'react';
 
 import { NavLink, Outlet } from 'react-router-dom';
-import { FaArrowUp, FaShoppingCart } from 'react-icons/fa';
+import { FaArrowUp, FaHome, FaPenAlt, FaShoppingCart, FaTasks } from 'react-icons/fa';
 import { AuthContext } from '../AuthProvider/AuthProvider';
 import DashboardNav from './DashboardNav/DashboardNav';
 
@@ -28,7 +28,7 @@ const Dashboard = () => {
                     isPending ? "pending" : isActive ? "text-black" : ""
                   } to='/dashboard/home' >
                     <div className='flex items-center gap-3'>
-                      <FaArrowUp className="text-2xl"></FaArrowUp>
+                      <FaHome className="text-2xl"></FaHome>
                       <span className="text-xl">Home</span>
                     </div>
                   </NavLink>
@@ -36,7 +36,7 @@ const Dashboard = () => {
                     isPending ? "pending" : isActive ? "text-black" : ""
                   } to='/dashboard/add-task'>
                     <div className='flex items-center gap-3'>
-                      <FaShoppingCart className="text-2xl"></FaShoppingCart>
+                      <FaPenAlt className="text-2xl"></FaPenAlt>
                       <span className="text-xl">Add Task</span>
                     </div>
                   </NavLink>
@@ -44,7 +44,7 @@ const Dashboard = () => {
                     isPending ? "pending" : isActive ? "text-black" : ""
                   } to='/dashboard/tasks'>
                     <div className='flex items-center gap-3'>
-                      <FaShoppingCart className="text-2xl"></FaShoppingCart>
+                      <FaTasks className="text-2xl"></FaTasks>
                       <span className="text-xl">All Tasks</span>
                     </div>
                   </NavLink>

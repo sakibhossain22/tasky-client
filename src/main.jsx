@@ -21,6 +21,7 @@ import AllTask from './components/Dashboard/AllTask/AllTask';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastProvider } from 'react-toast-notifications';
 import UpdateTask from './components/Dashboard/UpdateTask/UpdateTask';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 const queryClient = new QueryClient()
 const routes = createBrowserRouter([
   {
@@ -36,7 +37,7 @@ const routes = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <Dashboard></Dashboard>,
+    element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {

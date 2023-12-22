@@ -6,11 +6,11 @@ import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { useParams } from 'react-router-dom';
 function UpdateTask() {
     const [updateData, setUpdateData] = useState([])
-    const {id} = useParams()
+    const { id } = useParams()
     const { addToast } = useToasts();
     const axiosSecure = useAxiosSecure();
     const { register, handleSubmit } = useForm();
-const {loading} = useContext(AuthContext)
+    const { loading } = useContext(AuthContext)
     const onSubmit = async (data) => {
         const newTask = {
             title: data.title,
@@ -25,22 +25,22 @@ const {loading} = useContext(AuthContext)
                 console.log(res?.data);
                 // eslint-disable-next-line no-unused-vars
                 const toast = addToast('Task info Updated !', {
-                    appearance: 'info',
-                    autoDismiss: true, 
+                    appearance: 'success',
+                    autoDismiss: true,
                     autoDismissTimeout: 2000,
-                  });
-                 
+                });
+
             }
         } catch (error) {
             console.error(error);
         }
     };
-    useEffect(()=>{
+    useEffect(() => {
         axiosSecure.get(`/my-task/${id}`)
-        .then(res => {
-            setUpdateData(res?.data)
-        })
-    },[axiosSecure,id])
+            .then(res => {
+                setUpdateData(res?.data)
+            })
+    }, [axiosSecure, id])
     if (loading) return <div className='flex items-center justify-center h-screen'><span className="loading loading-spinner loading-lg"></span></div>
     return (
         <div className="mx-auto mt-4 mr-4 p-5 bg-gray-200 rounded shadow-md">
@@ -93,7 +93,7 @@ const {loading} = useContext(AuthContext)
                         Priority:
                     </label>
                     <select
-                    defaultValue={updateData?.priority}
+                        defaultValue={updateData?.priority}
                         name="priority"
                         id="priority"
                         className="mt-1 p-2 w-full border rounded-md"

@@ -6,7 +6,9 @@ import Swal from 'sweetalert2'
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import image from '../../assets/login2.png'
+import { useToasts } from "react-toast-notifications";
 const Login = () => {
+    const { addToast } = useToasts();
     const navigate = useNavigate()
     const { googleLogin, emailLogin } = useContext(AuthContext)
     // console.log(user);
@@ -16,11 +18,6 @@ const Login = () => {
         googleLogin()
             .then(result => {
                 const user = result.user
-                if (user) {
-                    axios.post('https://quickbite-server.vercel.app/jwt', { user: user?.email }, {
-                        withCredentials: true
-                    })
-                }
 
                 navigate(location.state ? location.state : '/')
                 console.log(user)
@@ -41,12 +38,11 @@ const Login = () => {
             .then(result => {
                 const resUser = result.user
                 if (resUser) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: 'Login Successful!',
-                        confirmButtonText: 'OK'
-                    })
+                    const toast = addToast('User Login Success !', {
+                        appearance: 'success',
+                        autoDismiss: true,
+                        autoDismissTimeout: 2000,
+                    });
                 }
                 navigate(location.state ? location.state : '/')
             })
