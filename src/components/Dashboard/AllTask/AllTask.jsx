@@ -186,8 +186,8 @@ const AllTask = () => {
                 <span className='lg:col-span-4 md:col-span-4 col-span-3 lg:text-base text-xs'>{todo.title}</span>
                 <span className='lg:col-span-4 md:col-span-4 col-span-3 lg:text-base text-xs '>{todo.priority}</span>
                 <span className='lg:col-span-2 md:col-span-2 col-span-3 lg:text-base text-xs '>{todo.deadline}</span>
-                <div className='flex lg:col-span-2 md:col-span-2 col-span-3 items-center justify-center ml-8 bg-red-200 py-2'>
-                  <button onClick={() => handleDelete(todo?._id)}>
+                <div className='flex  items-center justify-center lg:ml-20 ml-14'>
+                  <button className='lg:col-span-2 md:col-span-2 col-span-3 py-2 bg-red-200 px-6' onClick={() => handleDelete(todo?._id)}>
                    <MdDeleteSweep className='text-center mx-auto text-xl'></MdDeleteSweep>
                     </button>
                 </div>
@@ -220,8 +220,8 @@ const AllTask = () => {
                 <span className='lg:col-span-4 md:col-span-4 col-span-3 lg:text-base text-xs'>{todo.title}</span>
                 <span className='lg:col-span-4 md:col-span-4 col-span-3 lg:text-base text-xs '>{todo.priority}</span>
                 <span className='lg:col-span-2 md:col-span-2 col-span-3 lg:text-base text-xs '>{todo.deadline}</span>
-                <div className='flex lg:col-span-2 md:col-span-2 col-span-3 items-center justify-center ml-8 bg-red-200 py-2'>
-                  <button onClick={() => handleDelete(todo?._id)}>
+                <div className='flex  items-center justify-center lg:ml-20 ml-14'>
+                  <button className='lg:col-span-2 md:col-span-2 col-span-3 py-2 bg-red-200 px-6' onClick={() => handleDelete(todo?._id)}>
                    <MdDeleteSweep className='text-center mx-auto text-xl'></MdDeleteSweep>
                     </button>
                 </div>
@@ -254,8 +254,8 @@ const AllTask = () => {
                 <span className='lg:col-span-4 md:col-span-4 col-span-3 lg:text-base text-xs'>{todo.title}</span>
                 <span className='lg:col-span-4 md:col-span-4 col-span-3 lg:text-base text-xs '>{todo.priority}</span>
                 <span className='lg:col-span-2 md:col-span-2 col-span-3 lg:text-base text-xs '>{todo.deadline}</span>
-                <div className='flex lg:col-span-2 md:col-span-2 col-span-3 items-center justify-center ml-8 bg-red-200 py-2'>
-                  <button onClick={() => handleDelete(todo?._id)}>
+                <div className='flex  items-center justify-center lg:ml-20 ml-14'>
+                  <button className='lg:col-span-2 md:col-span-2 col-span-3 py-2 bg-red-200 px-6' onClick={() => handleDelete(todo?._id)}>
                    <MdDeleteSweep className='text-center mx-auto text-xl'></MdDeleteSweep>
                     </button>
                 </div>

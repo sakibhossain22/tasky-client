@@ -3,14 +3,16 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../../AxiosSecure/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import useTasks from "../../useTasks/useTasks";
 import axios from "axios";
+import { MdDeleteSweep } from "react-icons/md";
+import Swal from "sweetalert2";
+import { FaPen } from "react-icons/fa";
 
 const DashboardHome = () => {
     const [cateData, setCateData] = useState([])
     const [parcent, setParcent] = useState(0)
     console.log(cateData);
-    const { user } = useContext(AuthContext)
+    const { user, loading } = useContext(AuthContext)
     const axiosSecure = useAxiosSecure();
 
 
@@ -58,18 +60,42 @@ const DashboardHome = () => {
 
 
     }, [axiosSecure, user?.email]);
+    if (loading) return <div className='flex items-center justify-center h-screen'><span className="loading loading-spinner loading-lg"></span></div>
+    const handleUpdate = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Update it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.update(`/task/${id}`)
+                    .then(res => {
+                        if (res?.data?.modifiedCount > 0) {
+                            refetch()
+                            alert('updated')
+                        }
+                    })
 
+            }
+        });
+        console.log(id);
+
+    }
     return (
-        <div className="mr-8 my-5">
+        <div className="lg:mr-8 my-5">
             <div>
-                <h1 className="lg:text-4xl text-3xl font-bold">Wellcome <span className="text-[#da7b00]">{user?.displayName}</span></h1>
+                <h1 className="lg:text-4xl text-2xl font-bold">Wellcome <span className="text-[#da7b00]">{user?.displayName}</span></h1>
             </div>
             <div className="divider"></div>
             {/* Stats */}
             <div>
-                <div className="lg:flex stats gap-5 shadow">
+                <div className="lg:flex lg:stats gap-5 shadow">
 
-                    <div className="stat bg-green-400">
+                    <div className="stat  bg-green-400">
                         <div className="stat-figure text-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-8 h-8 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                         </div>
@@ -78,7 +104,7 @@ const DashboardHome = () => {
                         <div className="stat-desc">21% more than last month</div>
                     </div>
 
-                    <div className="stat bg-purple-300">
+                    <div className="stat mt-2 lg:m-0 bg-purple-300">
                         <div className="stat-figure text-secondary">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-8 h-8 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         </div>
@@ -87,7 +113,7 @@ const DashboardHome = () => {
                         <div className="stat-desc">21% more than last month</div>
                     </div>
 
-                    <div className="stat bg-yellow-400">
+                    <div className="stat mt-2 lg:m-0 bg-yellow-400">
                         <div className="stat-figure text-secondary">
                             <div className="avatar online">
                                 <div className="w-16 rounded-full">
@@ -95,7 +121,7 @@ const DashboardHome = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="stat-value">{parcent}%</div>
+                        <div className="stat-value">{parcent || 0}%</div>
                         <div className="stat-title">Tasks done</div>
                         <div className="stat-desc text-secondary">31 tasks remaining</div>
                     </div>
@@ -115,22 +141,28 @@ const DashboardHome = () => {
                             {/* head */}
                             <thead>
                                 <tr className="bg-gray-300">
-                                    <th>No.</th>
                                     <th>Title</th>
                                     <th>Status</th>
                                     <th>Deadline</th>
+                                    <th>Edit</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {/* row 1 */}
                                 {
                                     Array.isArray(data) &&
-                                    data.map((stat, index) => (
+                                    data.map((stat) => (
                                         <tr key={stat?._id}>
-                                            <td className="font-bold">{index + 1}</td>
                                             <td className="font-bold">{stat?.title}</td>
                                             <td>{stat?.status}</td>
                                             <td>{stat?.deadline}</td>
+                                            <div className='flex mt-1 items-center'>
+                                                <Link to={`/dashboard/updatetask/${stat?._id}`}>
+                                                    <button className='lg:col-span-2 md:col-span-2 col-span-3 py-2 bg-gray-300 px-3 lg:px-6'>
+                                                        <FaPen className='text-center mx-auto'></FaPen>
+                                                    </button>
+                                                </Link>
+                                            </div>
                                         </tr>
                                     ))
                                 }
